@@ -118,7 +118,8 @@ FileWatch* m1Resources::GetFileWatcher() const
 
 void m1Resources::PauseFileWatcher(bool pause)
 {
-	filewatch->Pause(pause);
+	//filewatch->Pause(pause);
+	LOGW("Not paused at all...");
 }
 
 Resource* m1Resources::CreateResource(Resource::Type type, const char* assets_path, const uint64_t& force_uid)
@@ -288,7 +289,7 @@ void m1Resources::StartFileWatcher()
 	filewatch = new FileWatch();
 	filewatch->Subscribe("Assets/"); //TODO: don't create events when own program save a file
 
-	filewatch->StartWatching();
+	//filewatch->StartWatching();
 }
 
 uint64_t m1Resources::GenerateMeta(const char* file)

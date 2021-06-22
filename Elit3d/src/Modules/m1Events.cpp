@@ -24,7 +24,7 @@ m1Events::~m1Events()
 UpdateStatus m1Events::PreUpdate()
 {
 	PROFILE_FUNCTION();
-	std::unique_lock<std::mutex> lock(App->resources->GetFileWatcher()->mtx);
+	//std::unique_lock<std::mutex> lock(App->resources->GetFileWatcher()->mtx);
 	while (!events.empty()) {
 		auto e = events.top();
 		switch (e->type)
@@ -143,7 +143,7 @@ UpdateStatus m1Events::PreUpdate()
 
 void m1Events::AddEvent(Event* e)
 {
-	std::unique_lock<std::mutex> lock(App->resources->GetFileWatcher()->mtx);
+	//std::unique_lock<std::mutex> lock(App->resources->GetFileWatcher()->mtx);
 	events.push(e);
 }
 

@@ -3,43 +3,29 @@
 #include "Tools/FileSystem.h"
 #include <thread>
 #include <mutex>
+#include "ExternalTools/efsw/efsw.hpp"
 
 #include "Modules/m1Events.h"
 
 class FileWatch
 {
+	friend class m1Resources;
+private:
+	class Listener : public efsw::FileWatchListener {
+	public:
+		Listener() = default;
+
+		void handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename = "");
+	};
 public:
 	FileWatch();
 	~FileWatch();
 
-public:
+private:
+	efsw::FileWatcher* fileWatcher = nullptr;
 	void Subscribe(const char* folder);
-	void StartWatching();
-	void Watch();
 
-	void Pause(bool pause);
-
-private:
-	void CheckFolders(std::list<m1Events::Event*>& ev);
-	void CheckFilesCreatedAndRemoved(Folder* f, std::stack<Folder*>& stack, std::list<m1Events::Event*>& ev);
-	void CheckRemovedFolders(Folder* f, std::list<m1Events::Event*>& ev);
-	void CheckRemovedFiles(Folder* f, std::list<m1Events::Event*>& ev);
-	void HandleEvents(std::list<m1Events::Event*>& e);
-
-	void CheckIfFileMoved(std::list<m1Events::Event*>& evs, std::list<m1Events::Event*>::iterator& e, m1Events::Event::Type type);
-	void CheckIfFolderMoved(std::list<m1Events::Event*>& evs, std::list<m1Events::Event*>::iterator& e, m1Events::Event::Type type);
-
-public:
-	std::mutex mtx;
-	std::condition_variable conditional;
-
-private:
-	std::string folder = "Assets/";
-	std::thread thread;
-	bool watch = true;
-	Folder* root = nullptr;
-
-	bool pause_watch = false;
-	bool create_events = true;
+	Listener* listener = nullptr;
+	efsw::WatchID assetsID = 0ULL;
 };
 

@@ -256,7 +256,7 @@ static const	char		*memoryLeakLogFile     = "Export/memleaks.log";
 static		void		doCleanupLogOnFirstRun();
 
 static std::mutex mtx;
-#define LOCK std::unique_lock<std::mutex> lock(mtx)
+#define LOCK //std::unique_lock<std::mutex> lock(mtx)
 
 // ---------------------------------------------------------------------------------------------------------------------------------
 // Local functions only

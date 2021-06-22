@@ -1,5 +1,5 @@
 #define USE_MMGR 1
-#define USE_FILEWATCHER 0
+#define USE_FILEWATCHER 1
 
 #define TILE_DATA_TYPE unsigned int
 #define TILEOBJECT_DATA_TYPE uint64_t
